@@ -97,7 +97,7 @@ class RemotePaginationTagLib {
             // display paginate steps
             (beginstep..endstep).each {i ->
                 if (currentstep == i) {
-                    writer << wrapInListItem(bootstrapEnabled,"<span class=\"currentStep\">${i}</span>")
+                    writer << wrapInListItem(bootstrapEnabled,"<span class=\"currentStep\">${i}</span>", true)
                 } else {
                     linkParams.offset = (i - 1) * max
                     writer << wrapInListItem(bootstrapEnabled,remoteLink(linkTagAttrs.clone()) {i.toString()})
@@ -313,7 +313,12 @@ class RemotePaginationTagLib {
 
     }
 
-	private def wrapInListItem(Boolean bootstrapEnabled, def val){
-		bootstrapEnabled ? "<li>$val</li>" : val
+	private def wrapInListItem(Boolean bootstrapEnabled, def val, active = false){
+		if (active) {
+			bootstrapEnabled ? "<li class=\"active\">$val</li>" : val
+		} else {
+			bootstrapEnabled ? "<li>$val</li>" : val
+		}
+		
 	}
 }
